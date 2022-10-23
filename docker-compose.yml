@@ -11,7 +11,6 @@ services:
     env_file:
       - ./env/mongo.env
 
-  # frontend:
   backend:
     # image: goals-node
     build: ./backend
@@ -30,6 +29,18 @@ services:
       - './env/backend.env'
     depends_on: 
       - mongodb
+  frontend:
+    build: ./frontend
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./frontend/src:/app/src
+
+    # same means with --it
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
 volumes:
   data:
   logs:
